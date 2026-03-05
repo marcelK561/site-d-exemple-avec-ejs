@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Université</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Conteneur Principal */
+        .login-container {
+            margin-top: 80px;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .login-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 3rem;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            color: #1e3c72;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+        }
+
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .forgot-password:hover {
+            opacity: 0.8;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            position: relative;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .register-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        .register-link a:hover {
+            opacity: 0.8;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .social-btn:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: #1e3c72;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .login-box {
+                padding: 2rem 1.5rem;
+            }
+
+            .login-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .social-login {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/Accueil" class="logo">🎓 UNIVERSITÉ</a>
+        <div class="nav-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/">Accueil</a></li>
+            <li><a href="#departements">Départements</a></li>
+            <li><a href="#scolarite">Scolarité</a></li>
+            <li><a href="#concours">Concours</a></li>
+            <li><a href="/connexion">Connexion</a></li>
+            <li><a href="/inscription">Inscription</a></li>
+        </ul>
+    </nav>
+
+    <!-- Conteneur de Connexion -->
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Connexion</h1>
+                <p>Accédez à votre espace étudiant</p>
+            </div>
+
+            <div class="error-message" id="errorMessage">
+                Identifiants incorrects. Veuillez réessayer.
+            </div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email ou Matricule</label>
+                    <input type="text" id="email" name="email" required placeholder="exemple@universite.cm">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn-login">Se connecter</button>
+            </form>
+            <div class="register-link">
+                Pas encore de compte ? <a href="/inscription">Inscrivez-vous</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Menu Toggle Mobile
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Gestion de la connexion
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            // Simulation de validation (à remplacer par votre logique backend)
+            if (email && password) {
+                // Exemple de validation simple
+                if (password.length < 6) {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'Le mot de passe doit contenir au moins 6 caractères.';
+                    return;
+                }
+
+                // Simuler une connexion réussie
+                console.log('Connexion avec:', { email, password });
+                
+                // Redirection vers le tableau de bord (à personnaliser)
+                // window.location.href = 'dashboard.html';
+                
+                alert('Connexion réussie ! (Cette fonctionnalité nécessite un backend)');
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

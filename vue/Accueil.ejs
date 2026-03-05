@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Université - Accueil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Carousel Principal */
+        .main-carousel {
+            margin-top: 80px;
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .carousel-slide:nth-child(1) {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500"><rect fill="%23667eea" width="1200" height="500"/></svg>');
+        }
+
+        .carousel-slide:nth-child(2) {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500"><rect fill="%23764ba2" width="1200" height="500"/></svg>');
+        }
+
+        .carousel-slide:nth-child(3) {
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="500"><rect fill="%23f093fb" width="1200" height="500"/></svg>');
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .carousel-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .carousel-dot.active {
+            background: white;
+            width: 30px;
+            border-radius: 6px;
+        }
+
+        /* Section Bienvenue */
+        .welcome-section {
+            display: flex;
+            padding: 4rem 2rem;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .welcome-image {
+            flex: 1;
+            min-width: 300px;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .welcome-text {
+            flex: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        .welcome-text h2 {
+            font-size: 2.5rem;
+            color: #1e3c72;
+        }
+
+        .welcome-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        /* Section Départements */
+        .departments-section {
+            padding: 4rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .departments-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 3rem;
+        }
+
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .department-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .department-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .department-image {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-shrink: 0;
+        }
+
+        .department-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .department-content h3 {
+            margin-bottom: 1rem;
+            color: #1e3c72;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .department-content p {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            flex-grow: 1;
+            
+            /* Limitation à 3 lignes avec points de suspension */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.5;
+            max-height: 4.5em; /* 3 lignes × 1.5 line-height */
+        }
+
+        .btn-voir-plus {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            font-weight: 500;
+            align-self: flex-start;
+        }
+
+        .btn-voir-plus:hover {
+            opacity: 0.9;
+        }
+
+        /* Carousel Images */
+        .image-carousel {
+            padding: 4rem 2rem;
+            overflow: hidden;
+        }
+
+        .image-carousel h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 2rem;
+        }
+
+        .image-scroll {
+            display: flex;
+            gap: 1.5rem;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        .image-scroll:hover {
+            animation-play-state: paused;
+        }
+
+        .image-item {
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-info p {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .dropdown-toggle {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        .dropdown-content {
+            display: none;
+            background: rgba(255,255,255,0.1);
+            margin-top: 0.5rem;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: #1e3c72;
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+                gap: 1rem;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .main-carousel,
+            .image-carousel {
+                display: none;
+            }
+
+            .welcome-section {
+                flex-direction: column;
+            }
+
+            .welcome-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .departments-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .departments-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .main-carousel {
+                height: 600px;
+            }
+
+            .departments-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="/" class="logo">🎓 UNIVERSITÉ</a>
+        <div class="nav-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="/">Accueil</a></li>
+            <li><a href="#departements">Départements</a></li>
+            <li><a href="#scolarite">Scolarité</a></li>
+            <li><a href="#concours">Concours</a></li>
+            <li><a href="/connexion">Connexion</a></li>
+            <li><a href="/inscription">Inscription</a></li>
+        </ul>
+    </nav>
+
+    <!-- Carousel Principal -->
+    <div class="main-carousel">
+        <div class="carousel-container" id="mainCarousel">
+            <div class="carousel-slide">Bienvenue à l'Université</div>
+            <div class="carousel-slide">Excellence Académique</div>
+            <div class="carousel-slide">Innovation et Recherche</div>
+        </div>
+        <div class="carousel-nav">
+            <span class="carousel-dot active" onclick="goToSlide(0)"></span>
+            <span class="carousel-dot" onclick="goToSlide(1)"></span>
+            <span class="carousel-dot" onclick="goToSlide(2)"></span>
+        </div>
+    </div>
+
+    <!-- Section Bienvenue -->
+    <section class="welcome-section" id="accueil">
+        <div class="welcome-image"></div>
+        <div class="welcome-text">
+            <h2>Bienvenue à Notre Université</h2>
+            <p>
+                Notre université est un établissement d'excellence qui s'engage à offrir une éducation de qualité supérieure 
+                à tous ses étudiants. Avec une histoire riche et une vision tournée vers l'avenir, nous formons les leaders 
+                de demain dans un environnement académique stimulant et inclusif.
+            </p>
+            <p>
+                Découvrez nos programmes innovants, nos installations de pointe et notre communauté dynamique qui vous 
+                accompagnera tout au long de votre parcours académique et professionnel.
+            </p>
+        </div>
+    </section>
+
+    <!-- Section Départements -->
+    <section class="departments-section" id="departements">
+        <h2>Nos Départements</h2>
+        <div class="departments-grid">
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Sciences Informatiques</h3>
+                    <p>Formation complète en développement logiciel, intelligence artificielle, cybersécurité et systèmes d'information. Nos programmes offrent une expertise pratique et théorique pour exceller dans le monde numérique.</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Génie Civil</h3>
+                    <p>Infrastructure, construction et gestion de projets d'envergure avec une approche durable et innovante pour le développement des villes de demain.</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Médecine</h3>
+                    <p>Formation médicale d'excellence et recherche clinique de pointe pour former les médecins et chercheurs de demain dans un environnement technologiquement avancé.</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Droit et Sciences Politiques</h3>
+                    <p>Sciences juridiques, relations internationales et diplomatie avec une approche comparative et globale du droit moderne.</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Économie</h3>
+                    <p>Gestion, finance, développement économique et entrepreneuriat pour les futurs leaders du monde des affaires et de l'économie internationale.</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Lettres et Arts</h3>
+                    <p>Langues, littérature et sciences humaines</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Sciences Naturelles</h3>
+                    <p>Biologie, chimie et sciences de l'environnement</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Ingénierie</h3>
+                    <p>Électrique, mécanique et industrielle</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Architecture</h3>
+                    <p>Design urbain et patrimoine architectural</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Sciences Sociales</h3>
+                    <p>Sociologie, psychologie et sciences politiques</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Sciences Sociales</h3>
+                    <p>Sociologie, psychologie et sciences politiques</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+            <div class="department-card">
+                <div class="department-image"></div>
+                <div class="department-content">
+                    <h3>Sciences Sociales</h3>
+                    <p>Sociologie, psychologie et sciences politiques</p>
+                    <button class="btn-voir-plus">Voir plus</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel Images -->
+    <div class="image-carousel">
+        <h2>Nos partenaires</h2>
+        <div class="image-scroll">
+            <div class="image-item"></div>
+            <div class="image-item"></div>
+            <div class="image-item"></div>
+            <div class="image-item"></div>
+            <div class="image-item"></div>
+            <div class="image-item"></div>
+            <div class="image-item"></div>
+            <div class="image-item"></div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🎓 UNIVERSITÉ</h3>
+                <p>Excellence académique depuis 1950</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liens Rapides</h3>
+                <ul class="footer-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#departements">Départements</a></li>
+                    <li><a href="#scolarite">Scolarité</a></li>
+                    <li><a href="#concours">Concours</a></li>
+                    <li><a href="connexion.html">Connexion</a></li>
+                    <li><a href="inscription.html">Inscription</a></li>
+                </ul>
+            </div>
+            <div class="footer-section footer-info">
+                <h3>Informations</h3>
+                <p>📍 Avenue Universitaire, Yaoundé</p>
+                <p>📞 +237 XXX XXX XXX</p>
+                <p>✉️ contact@universite.cm</p>
+                <p>Plus d'informations </p>
+                    <p><strong>Horaires:</strong> Lun-Ven 8h-17h</p>
+                    <p><strong>Fax:</strong> +237 XXX XXX XXX</p>
+                    <p><strong>Web:</strong> www.universite.cm</p>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2026 Université. Tous droits réservés.
+        </div>
+    </footer>
+
+    <script>
+        // Menu Toggle Mobile
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+
+        // Carousel Principal
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        function updateCarousel() {
+            const carousel = document.getElementById('mainCarousel');
+            carousel.style.transform = `translateX(-${currentSlide * 100}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateCarousel();
+        }
+
+        // Auto-play carousel
+        setInterval(nextSlide, 5000);
+
+        // Dropdown Footer
+        function toggleDropdown() {
+            const dropdown = document.getElementById('dropdownContent');
+            dropdown.classList.toggle('show');
+        }
+
+        // Dupliquer les images pour un scroll infini
+        const imageScroll = document.querySelector('.image-scroll');
+        if (imageScroll) {
+            const images = imageScroll.innerHTML;
+            imageScroll.innerHTML += images;
+        }
+    </script>
+</body>
+</html>

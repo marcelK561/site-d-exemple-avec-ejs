@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "../coursNodejs/codephp"
+		},
+		{
+			"path": "../coursNodejs"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "TPsitestatic"
+	}
+}
