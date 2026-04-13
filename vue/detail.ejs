@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= dept.titre %> - Notre Université</title>
+    <link rel="stylesheet" href="/style.css">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover { opacity: 0.8; }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 480px;
+            overflow: hidden;
+        }
+
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(10,20,50,0.85) 0%, rgba(10,20,50,0.3) 60%, transparent 100%);
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .hero-text {
+            padding: 2.5rem 3rem;
+            width: 100%;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover { color: white; }
+
+        .breadcrumb span {
+            color: rgba(255,255,255,0.3);
+            font-size: 13px;
+        }
+
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 500;
+            color: white;
+            line-height: 1.25;
+            max-width: 780px;
+        }
+
+        /* Contenu */
+        .content-wrap {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+
+        .divider {
+            width: 48px;
+            height: 3px;
+            background: #1e3c72;
+            border-radius: 2px;
+            margin-bottom: 1.75rem;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #333;
+        }
+
+        .back-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.7rem 1.4rem;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-main {
+            background: #1e3c72;
+            color: white;
+            border-color: transparent;
+        }
+
+        .btn-main:hover { background: #2a5298; }
+
+        .btn-outline {
+            background: white;
+            color: #333;
+        }
+
+        .btn-outline:hover { background: #f5f5f5; }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1400px;
+            margin: 0 auto;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .footer-section h3 { margin-bottom: 1.5rem; font-size: 1.3rem; }
+
+        .footer-links { list-style: none; }
+
+        .footer-links li { margin-bottom: 0.8rem; }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover { color: white; }
+
+        .footer-info p {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .hero { height: 340px; }
+            .hero h1 { font-size: 1.7rem; }
+            .hero-text { padding: 1.5rem; }
+            .content-wrap { padding: 2rem 1.25rem 3rem; }
+            .description { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <%- include('composant/header') %>
+
+    <main>
+        <!-- Hero : image + titre -->
+        <div class="hero">
+            <img src="<%= dept.image %>" alt="<%= dept.name %>">
+            <div class="hero-overlay">
+                <div class="hero-text">
+                    <!-- <div class="breadcrumb">
+                        <a href="/">Accueil</a>
+                        <span>/</span>
+                        <a href="/departements">Départements</a>
+                        <span>/</span>
+                        <a href="#" style="color:rgba(255,255,255,0.95)"><%= dept.name %></a>
+                    </div>-->
+                    <h1><%= dept.name %></h1>
+                </div>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="content-wrap">
+            <div class="divider"></div>
+            <p class="description"><%= dept.desciption %></p>
+
+            <div class="back-row">
+                <a href="/" class="btn btn-main">← Retour à l'accueil</a>
+                <a href="/departements" class="btn btn-outline">Autres départements</a>
+            </div>
+        </div>
+    </main>
+
+    <%- include('composant/footer') %>
+</body>
+</html>

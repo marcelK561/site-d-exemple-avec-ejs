@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription - Université</title>
+    <title><%= titre %></title>
     <style>
         * {
             margin: 0;
@@ -305,22 +305,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="Accueil" class="logo">🎓 UNIVERSITÉ</a>
-        <div class="nav-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="/">Accueil</a></li>
-            <li><a href="#departements">Départements</a></li>
-            <li><a href="#scolarite">Scolarité</a></li>
-            <li><a href="#concours">Concours</a></li>
-            <li><a href="/connexion">Connexion</a></li>
-            <li><a href="/inscription">Inscription</a></li>
-        </ul>
-    </nav>
+    <%- include('composant/header') %>
 
     <!-- Conteneur d'Inscription -->
     <div class="register-container">

@@ -1,0 +1,7 @@
+// Connexion MySQL : base = 'maryan' (qui contient la table sitewebexo)
+const optionBD = {
+  host: 'localhost',
+  user: 'admin',
+  password: 'admin123',
+  port: 3306,
+};

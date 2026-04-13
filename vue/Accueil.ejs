@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Université - Accueil</title>
+    <title>IUT : <%= titre %></title>
     <style>
         * {
             margin: 0;
@@ -144,13 +144,16 @@
             margin: 0 auto;
         }
 
-        .welcome-image {
-            flex: 1;
-            min-width: 300px;
-            height: 400px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .welcome-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;     /* couvre tout l’espace sans déformation */
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* si vous voulez que l'image prenne moins de place sur mobile */
+        @media (max-width: 768px) {
+            .welcome-image { height: 250px; }
         }
 
         .welcome-text {
@@ -164,6 +167,27 @@
         .welcome-text h2 {
             font-size: 2.5rem;
             color: #1e3c72;
+        }
+        .welcome-section {
+            display: flex;
+            padding: 4rem 2rem;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .welcome-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .welcome-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
         }
 
         .welcome-text p {
@@ -208,11 +232,18 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
 
-        .department-image {
+        .department-image-wrapper {
             width: 100%;
             height: 150px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .department-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
         }
 
         .department-content {
@@ -295,7 +326,23 @@
             flex-shrink: 0;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;          
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;               /* ← ajoute ça */
+        }
+       
         @keyframes scroll {
             0% {
                 transform: translateX(0);
@@ -304,6 +351,29 @@
                 transform: translateX(-50%);
             }
         }
+        .partner-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .image-scroll {
+            display: flex;
+            gap: 1.5rem;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        .image-item {
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
 
         /* Footer */
         .footer {
@@ -414,7 +484,25 @@
             }
 
             .welcome-section {
-                flex-direction: column;
+                display: flex;
+                padding: 4rem 2rem;
+                gap: 2rem;
+                max-width: 1400px;
+                margin: 0 auto;
+                }
+
+            .welcome-image {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .welcome-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 10px;
             }
 
             .welcome-text h2 {
@@ -449,206 +537,78 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
-        <a href="/" class="logo">🎓 UNIVERSITÉ</a>
-        <div class="nav-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="/">Accueil</a></li>
-            <li><a href="#departements">Départements</a></li>
-            <li><a href="#scolarite">Scolarité</a></li>
-            <li><a href="#concours">Concours</a></li>
-            <li><a href="/connexion">Connexion</a></li>
-            <li><a href="/inscription">Inscription</a></li>
-        </ul>
-    </nav>
+    <%- include('composant/header') %>
 
     <!-- Carousel Principal -->
     <div class="main-carousel">
         <div class="carousel-container" id="mainCarousel">
-            <div class="carousel-slide">Bienvenue à l'Université</div>
-            <div class="carousel-slide">Excellence Académique</div>
-            <div class="carousel-slide">Innovation et Recherche</div>
-        </div>
-        <div class="carousel-nav">
-            <span class="carousel-dot active" onclick="goToSlide(0)"></span>
-            <span class="carousel-dot" onclick="goToSlide(1)"></span>
-            <span class="carousel-dot" onclick="goToSlide(2)"></span>
+            <% slide.forEach((src, i) => { %>
+                <div class="carousel-slide">
+                    <img src="<%= src %>" alt="Slide <%= i + 1 %>">
+                </div>
+            <% }); %>
         </div>
     </div>
 
     <!-- Section Bienvenue -->
     <section class="welcome-section" id="accueil">
-        <div class="welcome-image"></div>
+        <div class="welcome-image">
+            <img src="<%= welcome_image %>" alt="Photo de bienvenue" loading="lazy" decoding="async">
+        </div>
         <div class="welcome-text">
             <h2>Bienvenue à Notre Université</h2>
             <p>
-                Notre université est un établissement d'excellence qui s'engage à offrir une éducation de qualité supérieure 
-                à tous ses étudiants. Avec une histoire riche et une vision tournée vers l'avenir, nous formons les leaders 
-                de demain dans un environnement académique stimulant et inclusif.
+                <%= message1 %>
             </p>
             <p>
-                Découvrez nos programmes innovants, nos installations de pointe et notre communauté dynamique qui vous 
-                accompagnera tout au long de votre parcours académique et professionnel.
+                <%= message2 %>
             </p>
         </div>
     </section>
 
     <!-- Section Départements -->
-    <section class="departments-section" id="departements">
-        <h2>Nos Départements</h2>
-        <div class="departments-grid">
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Sciences Informatiques</h3>
-                    <p>Formation complète en développement logiciel, intelligence artificielle, cybersécurité et systèmes d'information. Nos programmes offrent une expertise pratique et théorique pour exceller dans le monde numérique.</p>
-                    <button class="btn-voir-plus">Voir plus</button>
+   <section class="departments-section" id="detail">
+    <h2>Nos Départements</h2> 
+    <div class="departments-grid">
+
+        <% if (detail && detail.length > 0) { %>  
+            <% detail.forEach(dept => { %>  
+                <div class="department-card">
+                    <div class="department-image-wrapper">
+                        <img src="<%= dept.image || '/images/default.png' %>" 
+                             alt="<%= dept.name %>" 
+                             class="department-image" 
+                             loading="lazy">
+                    </div>
+                    <div class="department-content">
+                        <h3><%= dept.name %></h3>
+                        <p><%= dept.description %></p>  
+                        <a href="/departement/<%= dept.id %>" class="btn-voir-plus">Voir plus</a>  
+                    </div>
                 </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Génie Civil</h3>
-                    <p>Infrastructure, construction et gestion de projets d'envergure avec une approche durable et innovante pour le développement des villes de demain.</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Médecine</h3>
-                    <p>Formation médicale d'excellence et recherche clinique de pointe pour former les médecins et chercheurs de demain dans un environnement technologiquement avancé.</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Droit et Sciences Politiques</h3>
-                    <p>Sciences juridiques, relations internationales et diplomatie avec une approche comparative et globale du droit moderne.</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Économie</h3>
-                    <p>Gestion, finance, développement économique et entrepreneuriat pour les futurs leaders du monde des affaires et de l'économie internationale.</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Lettres et Arts</h3>
-                    <p>Langues, littérature et sciences humaines</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Sciences Naturelles</h3>
-                    <p>Biologie, chimie et sciences de l'environnement</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Ingénierie</h3>
-                    <p>Électrique, mécanique et industrielle</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Architecture</h3>
-                    <p>Design urbain et patrimoine architectural</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Sciences Sociales</h3>
-                    <p>Sociologie, psychologie et sciences politiques</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Sciences Sociales</h3>
-                    <p>Sociologie, psychologie et sciences politiques</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-            <div class="department-card">
-                <div class="department-image"></div>
-                <div class="department-content">
-                    <h3>Sciences Sociales</h3>
-                    <p>Sociologie, psychologie et sciences politiques</p>
-                    <button class="btn-voir-plus">Voir plus</button>
-                </div>
-            </div>
-        </div>
-    </section>
+            <% }) %>
+        <% } else { %>
+            <p>Aucun département disponible</p>
+        <% } %>
+
+    </div> 
+</section>
+
 
     <!-- Carousel Images -->
     <div class="image-carousel">
         <h2>Nos partenaires</h2>
         <div class="image-scroll">
-            <div class="image-item"></div>
-            <div class="image-item"></div>
-            <div class="image-item"></div>
-            <div class="image-item"></div>
-            <div class="image-item"></div>
-            <div class="image-item"></div>
-            <div class="image-item"></div>
-            <div class="image-item"></div>
+            <% partenaire.forEach(function(part){ %>
+                <div class="image-item">
+                    <img src="<%= part.image %>" alt="<%= part.name %>" class="partner-img" loading="lazy" decoding="async">
+                </div>
+            <% }); %>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>🎓 UNIVERSITÉ</h3>
-                <p>Excellence académique depuis 1950</p>
-            </div>
-            <div class="footer-section">
-                <h3>Liens Rapides</h3>
-                <ul class="footer-links">
-                    <li><a href="#accueil">Accueil</a></li>
-                    <li><a href="#departements">Départements</a></li>
-                    <li><a href="#scolarite">Scolarité</a></li>
-                    <li><a href="#concours">Concours</a></li>
-                    <li><a href="connexion.html">Connexion</a></li>
-                    <li><a href="inscription.html">Inscription</a></li>
-                </ul>
-            </div>
-            <div class="footer-section footer-info">
-                <h3>Informations</h3>
-                <p>📍 Avenue Universitaire, Yaoundé</p>
-                <p>📞 +237 XXX XXX XXX</p>
-                <p>✉️ contact@universite.cm</p>
-                <p>Plus d'informations </p>
-                    <p><strong>Horaires:</strong> Lun-Ven 8h-17h</p>
-                    <p><strong>Fax:</strong> +237 XXX XXX XXX</p>
-                    <p><strong>Web:</strong> www.universite.cm</p>
-            </div>
-        </div>
-        <div class="copyright">
-            &copy; 2026 Université. Tous droits réservés.
-        </div>
-    </footer>
-
+    <%- include('composant/footer') %>
     <script>
         // Menu Toggle Mobile
         function toggleMenu() {
@@ -658,7 +618,7 @@
 
         // Carousel Principal
         let currentSlide = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
+        const slide = document.querySelectorAll('.carousel-slide');
         const dots = document.querySelectorAll('.carousel-dot');
 
         function goToSlide(index) {
@@ -676,7 +636,7 @@
         }
 
         function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
+            currentSlide = (currentSlide + 1) % slide.length;
             updateCarousel();
         }
 

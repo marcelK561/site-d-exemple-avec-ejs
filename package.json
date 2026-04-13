@@ -2,6 +2,9 @@
   "dependencies": {
     "e": "^0.2.33",
     "ejs": "^4.0.1",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "express-myconnection": "^1.0.4",
+    "multer": "^2.1.1",
+    "mysql": "^2.18.1"
   }
 }
